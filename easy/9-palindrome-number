@@ -1,19 +1,20 @@
 class Solution {
     fun isPalindrome(x: Int): Boolean {
-        if (x < 0) return false
-        val xS = x.toString()
-        if (xS.length == 1) return true
-
-        var isPalindrome = true
-        val length = xS.lastIndex
-        val iteration = length/2
-        for (i in 0..iteration) {
-            if (xS[i] != xS[length-i]) {
-                isPalindrome = false
-                break
-            }
+        if (x < 0) {
+            return false
+        } else if (x < 10) {
+            return true
         }
 
-        return isPalindrome
+        var reverted = 0
+        var original = x
+
+        while (original != 0) {
+            reverted *= 10
+            reverted += original % 10
+            original /= 10
+        }
+
+        return reverted == x
     }
 }
