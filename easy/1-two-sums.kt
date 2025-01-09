@@ -1,23 +1,13 @@
 class Solution {
     fun twoSum(nums: IntArray, target: Int): IntArray {
-        val pair = IntArray(2)
-        var isFound = false
-        
-        for (i in 0 until nums.lastIndex) {
-            for (j in i+1 until nums.size) {
-                val sum = nums[i] + nums[j]
-                if (sum == target) {
-                    pair[0] = i
-                    pair[1] = j
-                    isFound = true
-                    break
-                }
-            }
-            if (isFound) {
-                break
-            }
+        val seen = HashMap<Int,Int>()
+
+        for (i in 0 until nums.size) {
+            val left = target - nums[i]
+            if (seen.containsKey(left)) return intArrayOf(seen[left]!!, i)
+            seen[nums[i]] = i
         }
-        
-        return pair
+
+        return intArrayOf()
     }
 }
