@@ -1,17 +1,14 @@
 class Solution {
     fun removeDuplicates(nums: IntArray): Int {
     
-        var prev = nums.first()
-        var prevIndex = 1
-        nums.forEachIndexed { i, num ->
-
-            if (i > 0 && prev != num) {
-                nums[prevIndex] = num
-                prev = num
-                prevIndex += 1
+        var counter = 0
+        for (i in 1 until nums.size) {
+            if (nums[counter] != nums[i]) {
+                counter++
+                nums[counter] = nums[i]
             }
-        }
+        }    
 
-        return prevIndex
+        return counter + 1
     }
 }
