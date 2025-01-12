@@ -1,16 +1,55 @@
 class Solution {
     fun romanToInt(s: String): Int {
-        val romanDic = hashMapOf('I' to 1, 'V' to 5, 'X' to 10, 'L' to 50, 'C' to 100, 'D' to 500, 'M' to 1000)
-        
-        val converted = mutableListOf<Int>()
-        
-        s.forEachIndexed { i, roman ->
-            converted.add(romanDic.getOrDefault(roman, 0))
-            if (i > 0 && converted[i-1] < converted[i]) {
-                converted[i-1] = converted[i-1] * -1
+
+        var number = 0
+        var prev = 'Z'
+
+        for (c in s) {
+            when(c) {
+                'I' -> {
+                    number += 1
+                }
+
+                'V' -> if(prev == 'I') {
+                    number += 3
+                } else {
+                    number += 5
+                }
+
+                'X' -> if(prev == 'I') {
+                    number += 8
+                } else {
+                    number += 10
+                }
+
+                'L' -> if(prev == 'X') {
+                    number += 30
+                } else {
+                    number += 50
+                }
+
+                'C' -> if(prev == 'X') {
+                    number += 80
+                } else {
+                    number += 100
+                }
+
+                'D' -> if(prev == 'C') {
+                    number += 300
+                } else {
+                    number += 500
+                }
+
+                'M' -> if(prev == 'C') {
+                    number += 800
+                } else {
+                    number += 1000
+                }
             }
+
+            prev = c
         }
-        
-        return converted.sum()
+
+        return number
     }
 }
