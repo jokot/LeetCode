@@ -1,12 +1,16 @@
 class Solution {
     fun maxScore(s: String): Int {
+        var left = 0
+        var right = s.count { it == '1' }
         var max = 0
-        for (i in 1 until s.length) {
-            val count = s.substring(0, i).filter{ it == '0'}.length + s.substring(i, s.length).filter{ it == '1'}.length
-            println(count)
-            if ( count > max) {
-                max = count
+
+        for (i in 0 until s.lastIndex) {
+            if (s[i] == '0') {
+                left++
+            } else {
+                right--
             }
+            max = maxOf (max, left+right)
         }
 
         return max
