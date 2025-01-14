@@ -19,16 +19,16 @@ class Solution {
 
     fun countWordIn(words: String, search: String): Int {
         var start = 0
-        var end = words.length - search.length
+        var end = search.length - 1
 
         var count = 0
 
-        for (i in 0 .. end) {
+        for (i in 0 .. words.length - 1 - end) {
             if (
                 words[i] == search[0] 
-                && words[i+search.lastIndex] == search[search.lastIndex]
+                && words[i+end] == search[end]
             ) {
-                for (j in 1 until search.lastIndex) {
+                for (j in 1 until end) {
                     if (words[j+i] != search[j]) {
                         count --
                         break
