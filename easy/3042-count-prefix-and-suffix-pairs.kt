@@ -13,8 +13,6 @@ class Solution {
 
     fun isPrefixAndSuffix(str1: String, str2: String): Boolean {
         if (str1.length > str2.length) return false
-        val prefix = str2.substring(0, str1.length)
-        val suffix = str2.substring(str2.length - str1.length, str2.length)
-        return str1 == prefix && str1 == suffix
+        return str1 == str2.substring(0, str1.length) && str1 == str2.substring(str2.length - str1.length, str2.length)
     }
 }
