@@ -1,18 +1,19 @@
 class Solution {
     fun isValid(s: String): Boolean {
         if (s.length < 2) return false
-        val openings = mutableListOf<Char>()
+        val openings = CharArray(s.length)
+        var i = -1
         for (c in s) {
             if (isOpening(c)) {
-                openings.add(0, c)
+                openings[++i] = c
             } else {
-                if (openings.size > 0 && isMatch(openings[0], c)) {
-                    openings.removeFirst()
+                if (i > -1 && isMatch(openings[i], c)) {
+                    i--
                 } else return false
             }
         }
 
-        return openings.size == 0
+        return i == -1
     }
 
     fun isOpening(c: Char): Boolean {
