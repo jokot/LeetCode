@@ -9,42 +9,18 @@
  */
 class Solution {
     fun mergeTwoLists(list1: ListNode?, list2: ListNode?): ListNode? {
-        if (list1 == null) return list2
-        if (list2 == null) return list1
+        val l1 = list1
+        val l2 = list2
+        if (l1 == null && l2 == null) return null
+        if (l1 == null) return l2
+        if (l2 == null) return l1
 
-        var mergedNode = list2
-        var current = list1
-        while (current != null) {
-            mergedNode = insertNode(mergedNode, current?.`val` ?: 0)
-            // print("${current.`val`}: ")
-            // printListNode(mergedNode)
-            current = current?.next
+        if (l1.`val` > l2.`val`) {
+            l2.next = mergeTwoLists(l2.next, l1)
+            return l2
         }
 
-        return mergedNode
-    }
-
-    fun printListNode(head: ListNode?) {
-        var current = head
-        while (current != null) {
-            print("${current?.`val`} -> ")
-            current = current?.next
-        }
-        println("null")
-    }
-
-    fun insertNode(head: ListNode?, newVal: Int): ListNode? {
-        when {
-            head == null -> return ListNode(newVal)
-            (head?.`val` ?: 0) >= newVal -> {
-                val newNode = ListNode(newVal)
-                newNode.next = head
-                return newNode
-            }
-            else -> {
-                head?.next = insertNode(head?.next, newVal)
-                return head
-            }
-        }
+        l1.next = mergeTwoLists(l1.next, l2)
+        return l1
     }
 }
