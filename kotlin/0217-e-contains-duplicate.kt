@@ -1,6 +1,14 @@
 // https://leetcode.com/problems/contains-duplicate
 class Solution {
     fun containsDuplicate(nums: IntArray): Boolean {
-        return nums.toSet().size < nums.size
+        val seen = HashSet<Int>(nums.size)
+
+        for (num in nums) {
+            if (!seen.add(num)) {
+                return true
+            }
+        }
+
+        return false
     }
 }
