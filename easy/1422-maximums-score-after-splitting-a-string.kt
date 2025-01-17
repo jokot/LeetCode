@@ -1,3 +1,4 @@
+// https://leetcode.com/problems/maximum-score-after-splitting-a-string
 class Solution {
     fun maxScore(s: String): Int {
         var left = 0

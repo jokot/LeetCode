@@ -1,3 +1,4 @@
+// https://leetcode.com/problems/string-matching-in-an-array
 class Solution {
     fun stringMatching(words: Array<String>): List<String> {
         val sb = StringBuilder()

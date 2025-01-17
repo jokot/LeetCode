@@ -1,3 +1,4 @@
+// https://leetcode.com/problems/count-prefix-and-suffix-pairs-i
 class Solution {
     fun countPrefixSuffixPairs(words: Array<String>): Int {
         var count = 0
@@ -13,7 +14,7 @@ class Solution {
 
     fun isPrefixAndSuffix(str1: String, str2: String): Boolean {
         if (str1.length > str2.length) return false
-        
+
         for (i in str1.indices) {
             if (str1[i] != str2[i] || str1[str1.length - i - 1] != str2[str2.length - i - 1]) return false
         }
