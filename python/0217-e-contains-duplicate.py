@@ -2,8 +2,7 @@
 from typing import List
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        if len(nums) < 2: return False
-        return len(set(nums)) != len(nums)
+        return len(set(nums)) < len(nums)
 
 if __name__ == '__main__':
     print(Solution().containsDuplicate([1,2,3,4]))
