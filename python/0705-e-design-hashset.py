@@ -2,18 +2,31 @@
 class MyHashSet:
 
     def __init__(self):
-        self.values = []
+        self.size = 1000
+        self.buckets = [[] for _ in range(self.size)]
+
+    def hash(self, key: int) -> int:
+        return key % self.size
 
     def add(self, key: int) -> None:
-        if key not in self.values:
-            self.values.append(key)
+        index = self.hash(key)
+        if key not in self.buckets[index]:
+            self.buckets[index].append(key)
 
     def remove(self, key: int) -> None:
-        if key in self.values:
-            self.values.remove(key)
+        index = self.hash(key)
+        if key in self.buckets[index]:
+            self.buckets[index].remove(key)
 
     def contains(self, key: int) -> bool:
-        return key in self.values
+        index = self.hash(key)
+        return key in self.buckets[index]
+
+    def getValues(self) -> list:
+        values = []
+        for bucket in self.buckets:
+            values.extend(bucket)
+        return values
 
 # Your MyHashSet object will be instantiated and called as such:
 # obj = MyHashSet()
@@ -24,11 +37,11 @@ class MyHashSet:
 if __name__ == '__main__':
     obj = MyHashSet()
     obj.add(1)
-    print(obj.values)
+    print(obj.getValues())
     obj.add(2)
-    print(obj.values)
+    print(obj.getValues())
     obj.remove(1)
-    print(obj.values)
+    print(obj.getValues())
     obj.add(3)
-    print(obj.values)
+    print(obj.getValues())
     print(obj.contains(3))
