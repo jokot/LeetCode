@@ -1,28 +1,17 @@
 // https://leetcode.com/problems/design-hashset
 class MyHashSet() {
-    private val size = 1000
-    private val buckets = Array(size) { mutableListOf<Int>() }
-
-    fun hash(key: Int): Int {
-        return key % size
-    }
+    private val buckets = BooleanArray(1000001)
 
     fun add(key: Int) {
-        val index = hash(key)
-        if (key !in buckets[index]) {
-            buckets[index].add(key)
-        }
+        buckets[key] = true
     }
 
     fun remove(key: Int) {
-        val index = hash(key)
-        if (key in buckets[index]) {
-            buckets[index].remove(key)
-        }
+        buckets[key] = false
     }
 
     fun contains(key: Int): Boolean {
-        return key in buckets[hash(key)]
+        return buckets[key]
     }
 
 }
