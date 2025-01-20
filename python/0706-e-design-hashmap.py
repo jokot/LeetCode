@@ -2,22 +2,22 @@
 class MyHashMap:
 
     def __init__(self):
-        self.max_size = 1000001
-        self.buckets = [-1 for _ in range(self.max_size)]
-
+        self.buckets = [None] * 1000001
+    
     def put(self, key: int, value: int) -> None:
         self.buckets[key] = value
 
     def get(self, key: int) -> int:
-        return self.buckets[key]
+        val = self.buckets[key]
+        return val if val != None else -1
 
     def remove(self, key: int) -> None:
-        self.buckets[key] = -1
+        self.buckets[key] = None
 
     def get_values(self) -> list:
         values = []
         for i, n in enumerate(self.buckets):
-            if n != -1:
+            if n != None:
                 values.append([i, n])
 
         return values
