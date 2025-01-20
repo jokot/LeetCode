@@ -1,4 +1,5 @@
 // https://leetcode.com/problems/design-hashmap
+// explanaiton: https://www.tldraw.com/ro/sbcUgWDC_fGgm-fQtIBjW?d=v-1073.23260.3050.1597.page
 data class MyListNode(
     val key: Int,
     val value: Int,
