@@ -1,19 +1,55 @@
 // https://leetcode.com/problems/design-hashmap
+data class MyListNode(
+    val key: Int,
+    val value: Int,
+    var next: MyListNode?
+)
+
 class MyHashMap() {
-    private val buckets = IntArray(1000001) { -1 }
+    private val size = 10007
+    private val mult = 1000019
+    private val data = arrayOfNulls<MyListNode>(size)
+
+    fun hash(key: Int): Int {
+        return ((key.toLong() * mult % size + size) % size).toInt()
+    }
 
     fun put(key: Int, value: Int) {
-        buckets[key] = value
+        remove(key)
+        val index = hash(key)
+        val node = MyListNode(key, value, data[index])
+        data[index] = node
     }
 
     fun get(key: Int): Int {
-        return buckets[key]
+        val index = hash(key)
+        var node = data[index]
+        while (node != null) {
+            if (node.key == key) return node.value
+            node = node.next
+        }
+
+        return -1
     }
 
     fun remove(key: Int) {
-        buckets[key] = -1
-    }
+        val index = hash(key)
+        var node: MyListNode? = data[index]
 
+        if (node == null) return
+        if (node.key == key) {
+            data[index] = node.next
+            return
+        }
+
+        while (node?.next != null) {
+            if (node.next!!.key == key) {
+                node.next = node.next!!.next
+                return
+            }
+            node = node.next
+        }
+    }
 }
 
 /**
