@@ -1,15 +1,14 @@
 ## https://leetcode.com/problems/valid-palindrome
+import string
+
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        cleanS = ""
-        for c in s:
-            if c.isalnum():
-                cleanS += c.lower()
+        translator = str.maketrans("","", string.punctuation)
+        s = s.translate(translator)
+        s = s.lower()
+        s = s.replace(" ", "")
 
-        for i in range(len(cleanS)//2):
-            if cleanS[i] != cleanS[len(cleanS)-1-i]: return False
-
-        return True
+        return s == s[::-1]
 
 if __name__ == '__main__':
     print(Solution().isPalindrome("A man, a plan, a canal: Panama"))
