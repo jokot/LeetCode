@@ -6,11 +6,11 @@ class Solution:
         """
         Do not return anything, modify s in-place instead.
         """
-        for i in range(0, (len(s)//2)):
-            temp = s[i]
-            s[i] = s[len(s)-1-i]
-            s[len(s)-1-i] = temp
-
+        l, r = 0, len(s) -1
+        while l < r:
+            s[l], s[r] = s[r], s[l]
+            l += 1
+            r -= 1
 
 if __name__ == '__main__':
     arr1 = ["h","e","l","l","o"]
