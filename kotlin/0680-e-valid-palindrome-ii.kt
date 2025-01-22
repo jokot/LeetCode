@@ -5,20 +5,14 @@ class Solution {
     }
 
     fun isPalindrome(s: String, left: Int, right: Int, skip: Boolean): Boolean {
-        var l = left
-        var r = right
-
-        while (l < r) {
-            if (s[l] == s[r]) {
-                l++
-                r--
+        return if (left < right) {
+            if (s[left] == s[right]) {
+                isPalindrome(s, left+1, right-1, skip)
             } else if (skip) {
-                return false
+                false
             } else {
-                return isPalindrome(s, l+1, r, true) || isPalindrome(s, l, r-1, true)
+                isPalindrome(s, left+1, right, true) || isPalindrome(s, left, right-1, true)
             }
-        }
-
-        return true
+        } else true
     }
 }
