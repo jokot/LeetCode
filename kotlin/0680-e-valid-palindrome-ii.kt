@@ -1,28 +1,22 @@
 // https://leetcode.com/problems/valid-palindrome-ii
 class Solution {
     fun validPalindrome(s: String): Boolean {
-        var l = 0
-        var r = s.length - 1
-
-        while (l < r) {
-            if (s[l] == s[r]) {
-                l++
-                r--
-            } else return validPalindrome(s, l+1, r) || validPalindrome(s, l, r-1)
-        }
-
-        return true
+        return isPalindrome(s, 0, s.length - 1, false)
     }
 
-    fun validPalindrome(s: String, l: Int, r: Int): Boolean {
-        var l = l
-        var r = r
+    fun isPalindrome(s: String, left: Int, right: Int, skip: Boolean): Boolean {
+        var l = left
+        var r = right
 
         while (l < r) {
             if (s[l] == s[r]) {
                 l++
                 r--
-            } else return false
+            } else if (skip) {
+                return false
+            } else {
+                return isPalindrome(s, l+1, r, true) || isPalindrome(s, l, r-1, true)
+            }
         }
 
         return true
