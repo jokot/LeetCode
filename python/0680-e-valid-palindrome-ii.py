@@ -2,34 +2,25 @@
 
 class Solution:
     def validPalindrome(self, s: str) -> bool:
+        mid = len(s)//2 + 1
+        reversed_half = s[-mid:][::-1]
 
-        l = 0
-        r = len(s) - 1
-        
-        while l < r:
-            if s[l] == s[r]:
-                l += 1
-                r -= 1
-            else:
-                return self.validChildPalindrome(s, l+1, r) or self.validChildPalindrome(s, l, r-1)
+        if s[:mid] == reversed_half:
+            return True
 
-        return True
+        for i in range (0, mid):
+            if s[i] != reversed_half[i]:
+                skip_left = s[i+1:mid] == reversed_half[i:mid-1]
+                skip_right = s[i:mid-1] == reversed_half[i+1:]
+                return skip_left or skip_right
 
-    def validChildPalindrome(self, s: str, l: int, r: int) -> bool:
-        while l < r:
-            if s[l] == s[r]:
-                l += 1
-                r -= 1
-            else:
-                return False
-        
         return True
 
 if __name__ == '__main__':
     print(Solution().validPalindrome("aba"))
-    print(Solution().validPalindrome("aba"))
-    print(Solution().validPalindrome("abc"))
+    print(Solution().validPalindrome("abca"))
     print(Solution().validPalindrome("abbac"))
-    print(Solution().validPalindrome("aaaaaaaa"))
+    print(Solution().validPalindrome("lccul"))
+    print(Solution().validPalindrome("acxcybycxcxa"))
     print(Solution().validPalindrome("eeccccbebaeeabebccceea"))
     print(Solution().validPalindrome("eeccccbebaeeabebcccee"))
