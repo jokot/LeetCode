@@ -5,23 +5,29 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
+        def insertLeft():
+            nonlocal left, current
+            nums1[current] = nums1[left]
+            left -= 1
+
+        def insertRight():
+            nonlocal right, current
+            nums1[current] = nums2[right]
+            right -= 1
+
         left = m - 1
         right = n - 1
         current = m + n - 1
         while current > -1:
             if left > -1 and right > -1 :
                 if nums2[right] > nums1[left]:
-                    nums1[current] = nums2[right]
-                    right -= 1
+                    insertRight()
                 else:
-                    nums1[current] = nums1[left]
-                    left -= 1
+                    insertLeft()
             elif left < 0 :
-                nums1[current] = nums2[right]
-                right -= 1
+                insertRight()
             else:
-                nums1[current] = nums1[left]
-                left -= 1
+                insertLeft()
 
             current -= 1
 
