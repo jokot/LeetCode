@@ -8,11 +8,8 @@ class Solution:
         maxProfit = 0
 
         for i in range(1, len(prices)):
-            profit = prices[i] - buy
-            if prices[i] < buy:
-                buy = prices[i]
-            if profit > maxProfit:
-                maxProfit = profit
+            maxProfit = max(prices[i] - buy, maxProfit)
+            buy = min(prices[i], buy)
         
         return maxProfit
 
