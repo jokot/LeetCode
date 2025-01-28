@@ -21,6 +21,11 @@ class Solution {
             }
         }
 
-        return points.sum()
+        var total = 0
+        for (p in points) {
+            total += p
+        }
+
+        return total
     }
 }
