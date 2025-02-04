@@ -11,32 +11,18 @@
  */
 class Solution {
     fun reverseList(head: ListNode?): ListNode? {
-        if (head == null) return null
-        val reverse = ListNode(head!!.`val`)
+        var newNode: ListNode? = null
+        var traverseNode = head
 
-        val copy = mutableListOf<Int>()
+        while (traverseNode != null) {
+            val temp = traverseNode.next
 
-        var node = head
-        while (node != null) {
-            copy.add(node!!.`val`)
-            node = node?.next
+            traverseNode.next = newNode
+            newNode = traverseNode
+
+            traverseNode = temp
         }
 
-        val right = copy.size - 1
-        for (i in 0 until copy.size / 2) {
-            val temp = copy[right - i]
-            copy[right - i] = copy[i]
-            copy[i] = temp
-        }
-
-        node = head
-        var tNode = node
-        for (i in 0 until copy.size) {
-            tNode?.`val` = copy[i]
-            tNode = tNode?.next
-            
-        }
-
-        return node
+        return newNode
     }
 }
