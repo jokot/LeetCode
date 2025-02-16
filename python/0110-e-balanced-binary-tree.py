@@ -8,27 +8,21 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        balance = True
 
-        def balanced(node):
-            nonlocal balance
+        def dfs(node):
 
-            if not node or not balance:
-                return 0
+            if not node: return (True, 0)
 
-            l = balanced(node.left)
-            r = balanced(node.right)
+            l, r = dfs(node.left), dfs(node.right)
 
-            if abs(l - r) > 1:
-                balance = False
+            balanced = l[0] and r[0] and abs(l[1] - r[1]) <= 1
 
-            return 1 + max(l, r)
+            return (balanced, 1 + max(l[1], r[1]))
         
-        balanced(root)
-        
-        return balance
+        return dfs(root)[0]
 
 def buildTree(values):
     if not values:
