@@ -10,19 +10,15 @@ class TreeNode:
 
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        
-        def traverse(nodeQ, nodeP):
-            if not nodeQ and not nodeP:
-                return True
-            elif not nodeQ or not nodeP:
-                return False
+        if not p and not q:
+            return True
+        elif not p or not q:
+            return False
 
-            left = traverse(nodeQ.left, nodeP.left)
-            right = traverse(nodeQ.right, nodeP.right)
+        left = self.isSameTree(p.left, q.left)
+        right = self.isSameTree(p.right, q.right)
 
-            return nodeQ.val == nodeP.val and left and right
-        
-        return traverse(p, q)
+        return p.val == q.val and left and right
 
 # Runner and test cases
 def build_tree(nodes, index=0):
