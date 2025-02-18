@@ -9,11 +9,18 @@ class TreeNode:
 
 class Solution:
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        if not subRoot: return True
-        if not root: return False
-        if self.sameTree(root, subRoot): return True
+        # if not subRoot: return True
+        # if not root: return False
+        # if self.sameTree(root, subRoot): return True
         
-        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+        # return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+
+        root_s = []
+        self.serializer(root, root_s)
+        subRoot_s = []
+        self.serializer(subRoot, subRoot_s)
+
+        return "".join(subRoot_s) in "".join(root_s)
 
     def sameTree(self, root, subRoot):
         if not root and not subRoot:
@@ -22,6 +29,14 @@ class Solution:
             return self.sameTree(root.left, subRoot.left) and self.sameTree(root.right, subRoot.right)
         else:
             return False
+
+    def serializer(self, node, tree_s):
+        if not node:
+            tree_s.append("#")
+        else:
+            tree_s.append(">"+str(node.val))
+            self.serializer(node.left, tree_s)
+            self.serializer(node.right,tree_s)
 
 # Runner and test cases
 def build_tree(nodes, index=0):
