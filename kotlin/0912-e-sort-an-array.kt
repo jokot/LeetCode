@@ -2,41 +2,38 @@
 
 class Solution {
     fun sortArray(nums: IntArray): IntArray {
-        mergeSort(nums)
+        mergeSort(nums, 0, nums.size-1)
         return nums
     }
 
-    fun mergeSort(nums: IntArray): IntArray {
-        if (nums.size == 1) return nums
-        
-        val left = nums.copyOfRange(0, nums.size/2)
-        val right = nums.copyOfRange(nums.size/2, nums.size)
+    fun mergeArray(nums: IntArray, L: Int, M: Int, R: Int): IntArray {
+        val left = nums.copyOfRange(L, M+1)
+        val right = nums.copyOfRange(M+1, R+1)
 
-        mergeSort(left)
-        mergeSort(right)
+        var i = L
+        var j = 0
+        var k = 0
 
-        var mainPointer = 0
-        var lPointer = 0
-        var rPointer = 0
-
-        while (mainPointer < nums.size) {
-            while (lPointer < left.size || rPointer < right.size) {
-                when {
-                    (lPointer < left.size && 
-                        rPointer < right.size && 
-                        left[lPointer] < right[rPointer]) || rPointer >= right.size -> {
-                            nums[mainPointer] = left[lPointer]
-                            lPointer++
-                        }
-                    else -> {
-                            nums[mainPointer] = right[rPointer]
-                            rPointer++
-                        }
-                }
-                mainPointer++
+        while (j < left.size || k < right.size) {
+            if ((j < left.size && k < right.size && left[j] < right[k]) || k >= right.size) {
+                nums[i] = left[j]
+                j++
+            } else {
+                nums[i] = right[k]
+                k++
             }
+            i++
         }
 
+        return nums
+    }
+
+    fun mergeSort(nums: IntArray, l: Int, r: Int): IntArray {
+        if (l == r) return nums
+        val m = (l + r)/2
+        mergeSort(nums, l, m)
+        mergeSort(nums, m+1, r)
+        mergeArray(nums, l, m, r)
         return nums
     }
 }
