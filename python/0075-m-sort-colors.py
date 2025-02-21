@@ -5,25 +5,23 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        red = 0
-        white = 0
-        blue = 0
 
-        for n in nums:
-            if n == 0:
-                red += 1
-            elif n == 1:
-                white += 1
-            else:
-                blue += 1
+        i, left, right = 0, 0, len(nums)-1
 
-        for i in range(len(nums)):
-            if i < red:
-                nums[i] = 0
-            elif i < red + white:
-                nums[i] = 1
-            else:
-                nums[i] = 2
+        def swap(l, r):
+            temp = nums[l]
+            nums[l] = nums[r]
+            nums[r] = temp
+        
+        while i <= right:
+            if nums[i] == 0:
+                swap(i, left)
+                left += 1
+            elif nums[i] == 2:
+                swap(i, right)
+                right -= 1
+                i -= 1
+            i += 1
 
 # Runner and test cases
 def test_sort_colors():
