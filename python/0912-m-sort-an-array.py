@@ -3,39 +3,37 @@ from typing import List
 
 class Solution:
     def sortArray(self, nums: List[int]) -> List[int]:
-        self.mergeSort(nums)
+
+        self.mergeSort(nums, 0, len(nums)-1)
+
         return nums
+    
+    def mergeArray(self, arr, L, M, R):
+        left, right = arr[L:M+1], arr[M+1:R+1]
+        i, j, k = L, 0, 0
 
-    def mergeSort(self, nums):
-        if len(nums) == 1:
-            return
-            
-        left = nums[0:len(nums)//2]
-        right = nums[len(nums)//2:]
+        while j < len(left) or k < len(right):
+            if (j < len(left) and 
+                k < len(right) and 
+                left[j] < right[k]) or k >= len(right) :
+                arr[i] = left[j]
+                j += 1
+            else:
+                arr[i] = right[k]
+                k += 1
+            i += 1
+        return arr
 
-        self.mergeSort(left)
-        self.mergeSort(right)
-
-        pointer_main = 0
-        pointer_l = 0
-        pointer_r = 0
+    def mergeSort(self, nums, l, r):
+        if l == r:
+            return nums
         
-        while pointer_main < len(nums):
-            while pointer_l < len(left) or pointer_r < len(right):
-                if pointer_l < len(left) and pointer_r < len(right):
-                    if left[pointer_l] < right[pointer_r]:
-                        nums[pointer_main] = left[pointer_l]
-                        pointer_l += 1
-                    else:
-                        nums[pointer_main] = right[pointer_r]
-                        pointer_r += 1
-                elif pointer_l < len(left):
-                    nums[pointer_main] = left[pointer_l]
-                    pointer_l += 1
-                else:
-                    nums[pointer_main] = right[pointer_r]
-                    pointer_r += 1
-                pointer_main += 1
+        m = (l + r) // 2
+        self.mergeSort(nums, l, m)
+        self.mergeSort(nums, m+1, r)
+        self.mergeArray(nums,l,m,r)
+
+        return nums
 
 # Runner and test cases
 def test_sort_array():
