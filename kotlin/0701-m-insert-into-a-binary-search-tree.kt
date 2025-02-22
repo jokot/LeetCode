@@ -14,17 +14,11 @@ class Solution {
 
         if (root == null) return TreeNode(`val`)
 
-        var left = root.left
-        var right = root.right
-
-        if (root.`val` < `val`) {
-            right = insertIntoBST(right, `val`)
+        if (`val` > root.`val`) {
+            root.right = insertIntoBST(root.right, `val`)
         } else {
-            left = insertIntoBST(left, `val`)
+            root.left = insertIntoBST(root.left, `val`)
         }
-        
-        root.right = right
-        root.left = left
         
         return root
     }
