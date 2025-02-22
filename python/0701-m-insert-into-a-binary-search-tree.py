@@ -10,25 +10,28 @@ class TreeNode:
 
 class Solution:
     def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
-        
-        def insert(node, val):
-            if not node:
-                return TreeNode(val = val)
-            
-            left = node.left
-            right = node.right
 
-            if node.val < val:
-                right = insert(node.right, val)
+        if not root:
+            return TreeNode(val)
+        
+        cur = root
+        inserted = False
+
+        while not inserted:
+            if cur.val < val:
+                if cur.right:
+                    cur = cur.right
+                else:
+                    cur.right = TreeNode(val)
+                    inserted = True
             else:
-                left = insert(node.left, val)
-
-            node.right = right
-            node.left = left
-            
-            return node
+                if cur.left:
+                    cur = cur.left
+                else:
+                    cur.left = TreeNode(val)
+                    inserted = True
         
-        return insert(root, val)
+        return root
 
 # Runner and test cases
 def build_tree(nodes, index=0):
