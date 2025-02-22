@@ -9,48 +9,13 @@ class TreeNode:
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        p_parents = []
-        q_parents = []
-
-        def findParents(root, child, parents):
-            node = root
-            while True:
-                parents.append(node.val)
-                if node.val == child.val:
-                    return
-                elif node.val > child.val:
-                    node = node.left
-                else:
-                    node = node.right
-
-        findParents(root, p, p_parents)
-        findParents(root, q, q_parents)
-
-        def getLCA(a, b):
-            for item in b[::-1]:
-                if item in a:
-                    return item
-            return -1
-        
-        def getLCANode(root, lca):
-            node = root
-            while True:
-                if node.val == lca:
-                    return node
-                elif node.val > lca:
-                    node = node.left
-                else:
-                    node = node.right
-            
-            return root
-
-        lca = None
-        if len(p_parents) > len(q_parents):
-            lca = getLCANode(root, getLCA(q_parents, p_parents))
-        else:
-            lca = getLCANode(root, getLCA(p_parents, q_parents))
-        
-        return lca
+        while True:
+            if p.val > root.val and q.val > root.val:
+                root = root.right
+            elif p.val < root.val and q.val < root.val:
+                root = root.left
+            else:
+                return root
 
 # Runner and test cases
 def build_tree(nodes, index=0):
