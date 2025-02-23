@@ -26,12 +26,10 @@ class ManualSolution:
     def get_top(self, buckets, k):
         top = []
         for b in buckets[::-1]:
-            if len(b):
-                for e in b:
-                    top.append(e)
-                    if len(top) == k:
-                        return top
-        
+            for e in b:
+                top.append(e)
+                if len(top) == k:
+                    return top
     
     def counter(self, nums):
         count = defaultdict(int)
