@@ -1,41 +1,24 @@
 from typing import List
+from collections import defaultdict
 
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        return self.checkRows(board) and self.checkColumns(board) and self.checkBoxes(board)
-    
-    def checkRows(self, board):
-        for row in board:
-            empty = row.count(".")
-            
-            filled = len(set(row)) - int(not not empty)
-
-            if empty + filled != len(row):
-                return False
-        return True
-
-    def checkColumns(self, board):
-        inverse_board = [[0 for i in range(9)] for j in range(9)]
-        for i, row in enumerate(board):
-            for j in range(len(row)):
-                inverse_board[j][i] = board[i][j]
+        rows = defaultdict(set)
+        cols = defaultdict(set)
+        boxes = defaultdict(set)
         
-        return self.checkRows(inverse_board)
-    
-    def checkBoxes(self, board):
-        group_board = [[0 for i in range(9)] for j in range(9)]
-        X = 0
-        J = 0
-        for x in range(3):
-            for y in range(3):
-                J=0
-                for i in range(3):
-                    for j in range(3):
-                        group_board[X][J] = board[3*x+i][3*y+j]
-                        J += 1
-                X += 1
-
-        return self.checkRows(group_board)
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == ".":
+                    continue
+                if (board[i][j] in rows[i] or
+                    board[i][j] in cols[j] or
+                    board[i][j] in boxes[(i//3, j//3)]):
+                    return False
+                rows[i].add(board[i][j])
+                cols[j].add(board[i][j])
+                boxes[(i//3, j//3)].add(board[i][j])
+        return True
 
 # Runner and test cases
 def test_is_valid_sudoku():
