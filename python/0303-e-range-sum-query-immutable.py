@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/range-sum-query-immutable/
 from typing import List
 
 class NumArray:

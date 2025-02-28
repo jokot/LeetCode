@@ -1,4 +1,4 @@
-
+// https://leetcode.com/problems/range-sum-query-immutable/description/
 class NumArray(private val nums: IntArray) {
     
     private val prefix = IntArray(nums.size)
