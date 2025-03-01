@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/range-sum-query-2d-immutable/
 from typing import List
 
 class NumMatrix:
@@ -7,35 +8,32 @@ class NumMatrix:
         self.aux_matrix = self.calculate_aux_matrix(matrix)
     
     def calculate_aux_matrix(self, matrix: List[List[int]]):
-        rows = len(matrix)
-        cols = len(matrix[0])
+        rows, cols = len(matrix) + 1, len(matrix[0]) + 1
         aux_matrix = [[0] * cols for _ in range(rows)]
 
-        for i in range(rows):
-            for j in range(cols):
-                if i == 0 and j == 0:
-                    aux_matrix[0][0] = matrix[0][0]
-                elif i == 0:
-                    aux_matrix[0][j] = aux_matrix[0][j-1]+matrix[0][j]
-                elif j == 0:
-                    aux_matrix[i][0] = aux_matrix[i-1][0]+matrix[i][0]
-                else:
-                    aux_matrix[i][j] = aux_matrix[i-1][j]+aux_matrix[i][j-1]+matrix[i][j]-aux_matrix[i-1][j-1]
+        for i in range(1, rows):
+            for j in range(1, cols):
+                aux_matrix[i][j] = (
+                    matrix[i-1][j-1]
+                    + aux_matrix[i-1][j]
+                    + aux_matrix[i][j-1]
+                    - aux_matrix[i-1][j-1]
+                )
 
         return aux_matrix
 
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
-        
-        if row1 == 0 and col1 == 0:
-            return self.aux_matrix[row2][col2]
-        elif row1 == 0:
-            return self.aux_matrix[row2][col2] - self.aux_matrix[row2][col1-1]
-        elif col1 == 0:
-            return self.aux_matrix[row2][col2] - self.aux_matrix[row1-1][col2]
-        else:
-            return self.aux_matrix[row2][col2] - self.aux_matrix[row1-1][col2] - self.aux_matrix[row2][col1-1] + self.aux_matrix[row1-1][col1-1]
-    
+        row1 += 1
+        col1 += 1
+        row2 += 1
+        col2 += 1
 
+        return (
+            self.aux_matrix[row2][col2]
+            - self.aux_matrix[row1-1][col2]
+            - self.aux_matrix[row2][col1-1]
+            + self.aux_matrix[row1-1][col1-1]
+        )
 
 # Your NumMatrix object will be instantiated and called as such:
 # obj = NumMatrix(matrix)
