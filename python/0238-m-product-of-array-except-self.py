@@ -2,16 +2,20 @@ from typing import List
 
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        prefix = [1] * len(nums)
-        suffix = [1] * len(nums)
+        size = len(nums)
+        output = [1] * size
 
-        for i in range(1, len(nums)):
-            prefix[i] = nums[i-1] * prefix[i-1]
+        for i in range(1, size):
+            output[i] = nums[i-1] * output[i-1]
+        
+        temp_suffix = 1
+        for i in range(size-1, -1, -1):
+            if i < size-1:
+                temp_suffix *= nums[i+1]
+                
+            output[i] *= temp_suffix
 
-        for i in range(len(nums)-2, -1, -1):
-            suffix[i] = nums[i+1] * suffix[i+1]
-
-        return [prefix[i] * suffix[i] for i in range(len(nums))]
+        return output
 
 # Runner and test cases
 def test_product_except_self():
