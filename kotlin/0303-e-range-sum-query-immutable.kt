@@ -4,22 +4,14 @@ class NumArray(private val nums: IntArray) {
     private val prefix = IntArray(nums.size)
     
     init {
-        calculateNumsPrefix()
+        prefix[0] = nums[0]
+        for (i in 1 until nums.size) {
+            prefix[i] = prefix[i-1] + nums[i]
+        }
     }
 
     fun sumRange(left: Int, right: Int): Int {
-        if (left == 0) return prefix[right]
-        return prefix[right] - prefix[left-1]
-    }
-
-    fun calculateNumsPrefix() {
-        for (i in 0 until nums.size) {
-            if (i == 0) {
-                prefix[0] = nums[0]
-            } else {
-                prefix[i] = nums[i]+prefix[i-1]
-            }
-        }
+        return if (left == 0) prefix[right] else prefix[right] - prefix[left-1]
     }
 }
 

@@ -4,22 +4,19 @@ from typing import List
 class NumArray:
 
     def __init__(self, nums: List[int]):
-        self.nums = nums
-        self.nums_prefix = self.calculate_prefix(nums)
-    
-    def calculate_prefix(self, nums):
-        nums_prefix = []
-        for i in range(len(nums)):
-            if i == 0:
-                nums_prefix.append(nums[0])
-            else:
-                nums_prefix.append(nums[i] + nums_prefix[len(nums_prefix) - 1])
-        return nums_prefix
+        self.n = len(nums)
+        self.nums_prefix = [0] * self.n
+
+        self.nums_prefix[0] = nums[0]
+        for i in range(1, self.n):
+            self.nums_prefix[i] = self.nums_prefix[i - 1] + nums[i]
     
     def sumRange(self, left: int, right: int) -> int:
-        if left == 0:
-            return self.nums_prefix[right]
-        return self.nums_prefix[right] - self.nums_prefix[left - 1]
+        return self.nums_prefix[right] if left == 0 else self.nums_prefix[right] - self.nums_prefix[left-1]
+
+# Your NumArray object will be instantiated and called as such:
+# obj = NumArray(nums)
+# param_1 = obj.sumRange(left,right)
 
 # Runner and test cases
 def test_num_array():
