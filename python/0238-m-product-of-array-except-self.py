@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/product-of-array-except-self/
 from typing import List
 
 class Solution:
@@ -9,12 +10,9 @@ class Solution:
             output[i] = nums[i-1] * output[i-1]
         
         temp_suffix = 1
-        for i in range(size-1, -1, -1):
-            if i < size-1:
-                temp_suffix *= nums[i+1]
-                
+        for i in range(size-1, -1, -1):    
             output[i] *= temp_suffix
-
+            temp_suffix *= nums[i]
         return output
 
 # Runner and test cases
