@@ -3,11 +3,19 @@ from typing import List
 
 class Solution:
     def allCellsDistOrder(self, rows: int, cols: int, rCenter: int, cCenter: int) -> List[List[int]]:
-        return sorted([[i // cols, i % cols] for i in range(rows * cols)], key = lambda val: self.count_distances(val[0], val[1], rCenter, cCenter))
+        max_distance = rows + cols
+        buckets = [[] for _ in range(max_distance)]
 
-    
-    def count_distances(self, r1, c1, r2, c2):
-        return abs(r1 - r2) + abs(c1 - c2)
+        for r in range(rows):
+            for c in range(cols):
+                distance = abs(r - rCenter) + abs(c - cCenter)
+                buckets[distance].append([r,c])
+        
+        result = []
+        for bucket in buckets:
+            result.extend(bucket)
+
+        return result
 
 def test_solution():
     solution = Solution()
@@ -27,6 +35,14 @@ def test_solution():
     expected = [[0,1],[0,0],[1,1],[1,0]]
     result = solution.allCellsDistOrder(rows, cols, rCenter, cCenter)
     assert result == expected
+
+    rows = 2
+    cols = 3
+    rCenter = 1
+    cCenter = 2
+    expected = [[1,2],[0,2],[1,1],[0,1],[1,0],[0,0]]
+    result = solution.allCellsDistOrder(rows, cols, rCenter, cCenter)
+    assert result == expected 
 
     print("All test data passed!")
 
