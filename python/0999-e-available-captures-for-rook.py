@@ -3,48 +3,27 @@ from typing import List
 # https://leetcode.com/problems/available-captures-for-rook/description/
 class Solution:
     def numRookCaptures(self, board: List[List[str]]) -> int:
-        rook_row = 0
-        rook_col = 0
-
         for i in range(8):
             for j in range(8):
                 if board[i][j] == "R":
-                    rook_row = i
-                    rook_col = j
+                    rook_row, rook_col = i, j
                     break
+            else:
+                continue
+            break
+        
         count = 0
-
-        # left
-        for n in board[rook_row][:rook_col][::-1]:
-            if n == 'p':
-                count += 1
-                break
-            elif n == 'B':
-                break
         
-        # right
-        for n in board[rook_row][rook_col+1:]:
-            if n == "p":
-                count += 1
-                break
-            elif n == "B":
-                break
-
-        # top
-        for i in range(rook_row-1, -1, -1):
-            if board[i][rook_col] == "p":
-                count += 1
-                break
-            elif board[i][rook_col] == "B":
-                break
-        
-        # bottom
-        for i in range(rook_row+1, 8):
-            if board[i][rook_col] == "p":
-                count += 1
-                break
-            elif board[i][rook_col] == "B":
-                break
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        for dr, dc in directions:
+            r, c = rook_row + dr, rook_col + dc
+            while 0 <= r < 8 and 0 <= c < 8:
+                if board[r][c] == "p":
+                    count += 1
+                    break
+                elif board[r][c] == "B":
+                    break
+                r, c = r + dr, c + dc
 
         return count
 
