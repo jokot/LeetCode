@@ -4,22 +4,20 @@ from typing import List
 
 class Solution:
     def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
-        if r*c != len(mat)*len(mat[0]):
+        m, n = len(mat), len(mat[0])
+        if m * n != r * c:
             return mat
         
-        output = [[1]*c for _ in range(r)]
+        result = [[0] * c for _ in range(r)]
+
+        for i in range(m * n):
+            ori_row, ori_col = i // n, i % n
+
+            res_row, res_col = i // c, i % c
+
+            result[res_row][res_col] = mat[ori_row][ori_col]
         
-        R = 0
-        C = 0
-        for row in mat:
-            for val in row:
-                output[R][C] = val
-                if C == c - 1:
-                    C = 0
-                    R += 1
-                else:
-                    C += 1
-        return output
+        return result
 
 def test_solution():
     solution = Solution()
