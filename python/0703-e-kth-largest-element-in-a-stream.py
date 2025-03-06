@@ -5,10 +5,12 @@ class KthLargest:
     def __init__(self, k: int, nums: List[int]):
         self.kth = k
         self.nums = nums
-
+        
     def add(self, val: int) -> int:
         self.nums.append(val)
-        return sorted(self.nums)[-self.kth]
+        self.nums.sort()
+        return self.nums[len(self.nums)-self.kth]
+        
 
 # Test runner
 if __name__ == "__main__":
