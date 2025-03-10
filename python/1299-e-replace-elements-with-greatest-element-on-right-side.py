@@ -5,19 +5,13 @@ class Solution:
     def replaceElements(self, arr: List[int]) -> List[int]:
         if len(arr) == 1:
             return [-1]
-        if len(arr) == 2:
-            return [arr[1],-1]
-        if len(arr) == 3:
-            return [max(arr[1:]), arr[2], -1]
         
-        prev = 0
-        for i in range(len(arr) - 3, -1, -1):
+        maxx = -1
+        for i in range(len(arr) - 1, -1, -1):
             temp = arr[i]
-            arr[i] = max(arr[i+1], arr[i+2], prev)
-            prev = temp
-        arr[-2] = arr[-1]
-        arr[-1] = -1
-        
+            arr[i] = maxx
+            maxx = max(temp, maxx)
+
         return arr
 
 # Runner code with sample input
