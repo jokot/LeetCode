@@ -1,26 +1,19 @@
+# https://leetcode.com/problems/can-place-flowers/
 from typing import List
 
 class Solution:
     def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
-        if not n:
+        if n == 0:
             return True
-        if len(flowerbed) == 1:
-            return flowerbed[0] == 0
-        
+
         for i in range(len(flowerbed)):
-            if i > 0 and i < len(flowerbed) - 1:
-                if not flowerbed[i] and not flowerbed[i-1] and not flowerbed[i+1]:
-                    print(1)
-                    flowerbed[i] = 1
-                    n -= 1
-            elif i == 0 and not flowerbed[0] and not flowerbed[1]:
-                print(0)
+            if flowerbed[i] == 0 and (i == 0 or flowerbed[i-1] == 0) and (i == len(flowerbed)-1 or flowerbed[i+1] == 0):
                 flowerbed[i] = 1
                 n -= 1
-            elif i == len(flowerbed) - 1 and not flowerbed[i] and not flowerbed[i-1]:
-                flowerbed[i] = 1
-                n -= 1
-        return n <= 0
+                if n == 0:
+                    return True
+        
+        return False
 
 def test_can_place_flowers():
     solution = Solution()
