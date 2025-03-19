@@ -3,23 +3,21 @@ from typing import List
 
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        if len(nums2) == 1:
-            return [-1]
-
-        nextGreater = {num: -1 for num in nums2}
-        notSet = [nums2[0]]
-
-        for i in range(1,len(nums2)):
-            num = nums2[i]
-            size = len(notSet)
-            for j in range(size-1, -1, -1):
-                ns = notSet[j]
-                if ns < num:
-                    nextGreater[ns] = num
-                    notSet.pop()            
-            notSet.append(num)
+        stack = []
+        next_greater = {}
         
-        return [nextGreater[num] for num in nums1]
+        # Process nums2 using stack - O(n) time
+        for num in nums2:
+            while stack and stack[-1] < num:
+                next_greater[stack.pop()] = num
+            stack.append(num)
+        
+        # Any remaining numbers in stack have no greater element
+        for num in stack:
+            next_greater[num] = -1
+            
+        # Map nums1 to their next greater elements - O(m) time
+        return [next_greater[num] for num in nums1]
 
 # Runner code with sample input
 if __name__ == "__main__":
