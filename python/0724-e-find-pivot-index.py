@@ -1,41 +1,35 @@
 # https://leetcode.com/problems/find-pivot-index/description/
 from typing import List
+
 class Solution:
     def pivotIndex(self, nums: List[int]) -> int:
         if len(nums) == 1:
-            return -1
+            return 0
         left_sum = []
         right_sum = []
 
         for i in range(len(nums)):
+            right = len(nums)-i-1
             if i == 0:
                 left_sum.append(nums[0])
-                right_sum.append(nums[len(nums)-1])
+                right_sum.append(nums[right])
             else:
                 left_sum.append(nums[i] + left_sum[-1])
-                right_sum.append(nums[i] + right_sum[-1])
+                right_sum.append(nums[right] + right_sum[-1])
+
         right_sum = right_sum[::-1]
 
-        print(left_sum)
-        print(right_sum)
-
         if not right_sum[1]:
-            print("a")
             return 0
 
         for i in range(1, len(nums)-1):
-            print(left_sum[i-1], right_sum[i+1])
-            print(left_sum[i+1], right_sum[i-1])
-            if left_sum[i+1] == right_sum[i-1]:
-                print("b")
+            if left_sum[i-1] == right_sum[i+1]:
                 return i
 
         if not left_sum[len(nums)-2]:
-            print("c")
-            return len(num)-1
+            return len(nums)-1
 
         return -1
-
 
 # Runner code with sample input
 if __name__ == "__main__":
@@ -45,11 +39,11 @@ if __name__ == "__main__":
         ([1,2,3], -1),                # LeetCode example 2
         ([2,1,-1], 0),                # LeetCode example 3
         ([0], 0),                     # Single element zero
-        ([1], -1),                    # Single non-zero element
+        ([1], 0),                    # Single non-zero element
         ([-1,-1,-1,0,1,1], 0),        # Negative numbers
         ([1,1,1,1], -1),              # All same numbers
         ([-1,-1,0,1,1,0], 5),         # Zero at end
-        ([0,0,0], 1),                 # Multiple zeros
+        ([0,0,0], 0),                 # Multiple zeros
     ]
     
     solution = Solution()
