@@ -3,32 +3,14 @@ from typing import List
 
 class Solution:
     def pivotIndex(self, nums: List[int]) -> int:
-        if len(nums) == 1:
-            return 0
-        left_sum = []
-        right_sum = []
+        total = sum(nums)
+        left_sum = 0
 
-        for i in range(len(nums)):
-            right = len(nums)-i-1
-            if i == 0:
-                left_sum.append(nums[0])
-                right_sum.append(nums[right])
-            else:
-                left_sum.append(nums[i] + left_sum[-1])
-                right_sum.append(nums[right] + right_sum[-1])
-
-        right_sum = right_sum[::-1]
-
-        if not right_sum[1]:
-            return 0
-
-        for i in range(1, len(nums)-1):
-            if left_sum[i-1] == right_sum[i+1]:
+        for i, num in enumerate(nums):
+            if left_sum == total - left_sum - num:
                 return i
-
-        if not left_sum[len(nums)-2]:
-            return len(nums)-1
-
+            left_sum += num
+        
         return -1
 
 # Runner code with sample input
