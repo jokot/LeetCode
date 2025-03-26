@@ -1,43 +1,25 @@
 # https://leetcode.com/problems/maximum-number-of-balloons/
+
+from collections import defaultdict
+
 class Solution:
     def maxNumberOfBalloons(self, text: str) -> int:
-        ballon = {
-            'b': 1,
-            'a': 1,
-            'l': 2,
-            'o': 2,
-            'n': 1
-        }
-
-        ballonCount = {
-            'b': 1,
-            'a': 1,
-            'l': 2,
-            'o': 2,
-            'n': 1
-        }
         
-        count = 0
-        wordCount = 7
+        one = defaultdict(int)
+        two = defaultdict(int)
 
         for c in text:
-            charCount = ballonCount.get(c, -1)
-            if  charCount > 0:
-                ballonCount[c] = charCount - 1
-                wordCount -= 1 
-            
-            if wordCount == 0:
-                count += 1
-                ballonCount = {
-                    'b': 1,
-                    'a': 1,
-                    'l': 2,
-                    'o': 2,
-                    'n': 1
-                }
-                wordCount = 7
+            if c == 'b' or c =='a' or c == 'n':
+                one[c] += 1
+            elif c == 'l' or c == 'o':
+                two[c] += 1
+                
+        if one and two and len(one) == 3 and len(two) == 2:
+            oneMin = min(list(one.values()))
+            twoMin = min(list(two.values()))
+            return min(oneMin, twoMin//2) 
 
-        return count
+        return 0
 
 # Runner code with sample input
 if __name__ == "__main__":
