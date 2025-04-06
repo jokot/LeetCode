@@ -3,18 +3,16 @@ from typing import List
 
 class Solution:
     def stringMatching(self, words: List[str]) -> List[str]:
-        if len(words) == 1:
-            return []
-        
         result = []
 
-        for i in range(len(words)):
-            for k in range(i+1, len(words)):
-                if words[i] in words[k]:
-                    result.append(words[i])
-                elif words[k] in words[i]:
-                    result.append(words[k])
-        return list(set(result))
+        for i, val in enumerate(words):
+            others = words[:i] + words[i+1:]
+            for o in others:
+                if val in o:
+                    result.append(val)
+                    break
+        
+        return result
 
 # Test runner
 if __name__ == "__main__":
