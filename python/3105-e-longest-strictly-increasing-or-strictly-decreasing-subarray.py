@@ -20,8 +20,6 @@ class Solution:
                 decrease = 1
             
             max_len = max(max_len, increase, decrease)
-        
-        print(max_len, increase, decrease)
 
         return max_len
 
