@@ -9,11 +9,11 @@ class Solution:
         for a in arr:
             count[a] += 1
 
-        for key, val in count.items():
-            if k == 1 and val == 1:
-                return key
-            elif val == 1:
+        for a in arr:
+            if count[a] == 1:
                 k -= 1
+                if k == 0:
+                    return a
 
         return ""
 
