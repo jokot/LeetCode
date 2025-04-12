@@ -5,20 +5,20 @@ from typing import List
 class Solution:
     def findMissingAndRepeatedValues(self, grid: List[List[int]]) -> List[int]:
         n = len(grid)
-        seen = defaultdict(int)
-        result = [0,0]
+        seen = set()
+        repeated = 0
 
         for row in grid:
-            for v in row:
-                seen[v] += 1
+            for cell in row:
+                if cell in seen:
+                    repeated = cell
+                seen.add(cell)
         
         for i in range(1, n*n+1):
-            if seen[i] > 1:
-                result[0] = i
-            elif seen.get(i, 0) == 0:
-                result[1] = i
+            if i not in seen:
+                return [repeated, i]
 
-        return result
+        return [0,0]
 
 # Test runner
 if __name__ == "__main__":
