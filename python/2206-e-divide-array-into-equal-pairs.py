@@ -1,22 +1,16 @@
 # https://leetcode.com/problems/divide-array-into-equal-pairs/
 
 from typing import List
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 class Solution:
     def divideArray(self, nums: List[int]) -> bool:
-        seen = defaultdict(int)
+        count = Counter(nums)
 
-        pairCount = len(nums) // 2
-        for n in nums:
-            seen[n] += 1
-           
-        total = 0
-        for key, val in seen.items():
-            total += val // 2
+        for val in count.values():
+            if val%2 != 0:
+                return False
 
-        if total != pairCount:
-            return False
         return True
 
 # Test runner
