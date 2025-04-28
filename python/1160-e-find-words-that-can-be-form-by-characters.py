@@ -9,8 +9,6 @@ class Solution:
 
         for c in chars:
             countChars[c] += 1
-        
-        print(countChars)
 
         def isCanForm(word):
             for c in set(word):
