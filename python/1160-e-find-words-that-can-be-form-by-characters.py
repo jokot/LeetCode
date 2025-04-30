@@ -5,24 +5,28 @@ from collections import defaultdict
 class Solution:
     def countCharacters(self, words: List[str], chars: str) -> int:
 
-        countChars = defaultdict(int)
+        countChars = [0 for i in range(26)]
 
         for c in chars:
-            countChars[c] += 1
+            countChars[ord(c) - ord('a')] += 1
 
         def isCanForm(word):
-            for c in set(word):
-                if word.count(c) > countChars.get(c, 0):
+            chars = countChars.copy()
+            for c in word:
+                index = ord(c) - ord('a')
+                if chars[index] == 0:
                     return False
+                chars[index] -= 1
             
             return True
         
         count = 0
 
         for word in words:
-            if isCanForm(word):
+            isCan = isCanForm(word)
+            if isCan:
                 count += len(word)
-        
+
         return count
 
 # Test runner
