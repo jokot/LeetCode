@@ -2,17 +2,25 @@
 class Solution {
     func countCharacters(_ words: [String], _ chars: String) -> Int {
 
-        var count: [String : Int] = [:]
+        var count = Array(repeating: 0, count: 26)
 
-        for char in chars {
-            count[String(char), default: 0] += 1
+        func getIndexFromChar(char: Character) -> Int {
+            let charAscii = Int(char.asciiValue ?? 0)
+            let aAscii = Int(Character("a").asciiValue ?? 0)
+            return charAscii-aAscii
         }
 
-        func isCanForm(word: String, count: [String:Int]) -> Bool {
+        for char in chars {
+            count[getIndexFromChar(char: char)] += 1
+        }
+
+        func isCanForm(word: String, count: [Int]) -> Bool {
+            var runningCount = count
             for c in word {
-                if word.filter{ $0 == c }.count > count[String(c), default: 0] {
+                if runningCount[getIndexFromChar(char: c)] == 0 {
                     return false
                 }
+                runningCount[getIndexFromChar(char: c)] -= 1
             }
 
             return true
