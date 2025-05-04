@@ -4,15 +4,7 @@ class Solution {
         var count = 0
 
         for word in words {
-            var isIn = true
-
-            for c in Set(word) {
-                if !allowed.contains(c) {
-                    isIn = false
-                    break
-                }
-            }
-            if isIn {
+            if Set(word).isSubset(of: Set(allowed)) {
                 count += 1
             }
         }
