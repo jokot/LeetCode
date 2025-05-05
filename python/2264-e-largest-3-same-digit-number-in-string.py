@@ -26,6 +26,15 @@ class Solution:
                 result = i
         return result
 
+# __import__("atexit").register(lambda: open("display_runtime.txt", "w").write("0"))
+# class Solution:
+#     def largestGoodInteger(self, num: str) -> str:
+#         for m in ["999","888", "777", "666", "555", "444","333","222","111","000"]:
+#             if m in num:
+#                 return m
+
+#         return ""   
+
 # Test runner
 if __name__ == "__main__":
     solution = Solution()
