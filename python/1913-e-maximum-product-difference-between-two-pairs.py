@@ -3,8 +3,24 @@ from typing import List
 
 class Solution:
     def maxProductDifference(self, nums: List[int]) -> int:
-        nums.sort()
-        return (nums[-1]*nums[-2])-(nums[0]*nums[1])
+        a = 10000
+        b = 10000
+        c = 0
+        d = 0
+        for n in nums:
+            if n <= a:
+                b = a
+                a = n
+            elif n <= b:
+                b = n
+            
+            if n >= d:
+                c = d
+                d = n
+            elif n >= c:
+                c = n
+
+        return c*d - a*b
 
 # Test runner
 if __name__ == "__main__":
