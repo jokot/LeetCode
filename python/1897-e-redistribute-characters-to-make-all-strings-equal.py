@@ -12,7 +12,10 @@ class Solution:
             for c in word:
                 all_count[c] += 1
 
-        return len(set(all_count.values())) == 1 and sum(all_count.values()) > len(all_count)
+        for val in set(all_count.values()):
+            if val % len(words) != 0:
+                return False
+        return True
 
 def main():
     # Test cases
