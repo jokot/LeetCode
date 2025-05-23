@@ -1,43 +1,41 @@
-from collections import defaultdict
+from collections import Counter
 from typing import List
 
 class Solution:
     def makeEqual(self, words: List[str]) -> bool:
-        if len(words) == 1: 
-            return True
-
-        all_count = defaultdict(int)
-
-        for word in words:
-            for c in word:
-                all_count[c] += 1
-
-        for val in set(all_count.values()):
-            if val % len(words) != 0:
+        n = len(words)
+        
+        for val in Counter("".join(words)).values():
+            if val % n != 0:
                 return False
         return True
 
 def main():
-    # Test cases
+    # Test cases: (words, expected_output)
+    test_cases = [
+        (["abc", "aabc", "bc"], True),           # LeetCode example 1
+        (["ab", "a"], False),                      # LeetCode example 2
+        (["caaaaa","aaaaaaaaa","aaaaaa","aaaaaaa","aaaaa","aaa","aaaa","a"], False),  # LeetCode example 3
+        ([], True),                               # Empty array
+        (["a"], True),                            # Single string
+        (["a", "a"], True),                       # Same strings
+        (["abc", "def"], False),                  # Different characters
+        (["aaa", "bbb", "ccc"], True),           # No common characters
+        (["xy", "xy"], True),                     # Already equal
+        (["a", "b", "c", "a", "b", "c"], False),   # Multiple equal distributions
+    ]
+    
     solution = Solution()
     
-    # Test case 1: Should return True
-    test1 = ["abc", "aabc", "bc"]
-    print(f"Test case 1: {test1}")
-    print(f"Expected: True")
-    print(f"Output: {solution.makeEqual(test1)}\n")
-    
-    # Test case 2: Should return False
-    test2 = ["ab", "a"]
-    print(f"Test case 2: {test2}")
-    print(f"Expected: False")
-    print(f"Output: {solution.makeEqual(test2)}\n")
-    
-    # Test case 3: Should return True
-    test3 = ["caaaaa","aaaaaaaaa","aaaaaa","aaaaaaa","aaaaa","aaa","aaaa","a"]
-    print(f"Test case 3: {test3}")
-    print(f"Expected: True")
-    print(f"Output: {solution.makeEqual(test3)}\n")
+    # Test each case
+    for i, (words, expected) in enumerate(test_cases, 1):
+        result = solution.makeEqual(words)
+        print(f"Test Case {i}:")
+        print(f"Input: {words}")
+        print(f"Expected: {expected}")
+        print(f"Got: {result}")
+        print(f"{'✓ Passed' if result == expected else '✗ Failed'}")
+        print("-" * 50)
 
 if __name__ == "__main__":
     main()
